@@ -1,0 +1,9 @@
+[submodule "misc/base-lib/hammer"]
+	path = misc/base-lib/hammer
+	url = https://github.com/EightMedia/hammer.js.git
+[submodule "misc/base-lib/bootstrap"]
+	path = misc/base-lib/bootstrap
+	url = https://github.com/twbs/bootstrap.git
+[submodule "misc/base-lib/font-awesome"]
+	path = misc/base-lib/font-awesome
+	url = https://github.com/FortAwesome/Font-Awesome.git

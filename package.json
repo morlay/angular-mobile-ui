@@ -1,0 +1,20 @@
+{
+    "name": "angular-mobile-ui",
+    "shortName": "amu",
+    "version": "0.0.1",
+    "devDependencies": {
+        "grunt": "*",
+
+        "grunt-contrib-htmlmin": "*",
+        "grunt-contrib-less": "*",
+        "grunt-contrib-concat": "*",
+        "grunt-contrib-uglify": "*",
+
+        "grunt-contrib-connect": "*",
+        "grunt-contrib-watch": "*",
+        "grunt-contrib-copy": "*",
+        "grunt-contrib-clean": "*",
+
+        "grunt-angular-templates": "*"
+    }
+}

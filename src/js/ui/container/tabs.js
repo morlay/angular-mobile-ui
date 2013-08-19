@@ -309,7 +309,5 @@ angular.module('ui.container.tabs', [])
                 }
             }
         };
-    })
-
-;
+    });
 

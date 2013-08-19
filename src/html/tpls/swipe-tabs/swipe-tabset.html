@@ -1,0 +1,16 @@
+<div class="swipe-tabset">
+
+	<div swipe-tabset-titles="tabsAbove"></div>
+
+	<div class="swipe-tab-content">
+		<container class="swipe-container"
+				   ng-style="{'width':paneWidth * tabs.length +'px'}">
+			<div class="swipe-tab-pane" ng-style="{'width':paneWidth +'px'}"
+				 ng-repeat="tab in tabs"
+				 swipe-tab-content-transclude="tab">
+			</div>
+		</container>
+	</div>
+	<div swipe-tabset-titles="!tabsAbove"></div>
+</div>
+

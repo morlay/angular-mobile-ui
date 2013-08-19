@@ -1,0 +1,15 @@
+<div class="pull-refresh">
+	<container class="pull-refresh-container">
+		<div class="pull-refresh-message">
+			<div class="pull-refresh-icon" class="icon"
+				 ng-class="{'arrow':isPulling,'arrow-up':isPullingEnough,'loading':isLoading}">
+			</div>
+			<span ng-hide="isPulling"> {{isLoading?'正在加载 …':'加载完成' }}</span>
+			<span ng-show="isPullingEnough"> 施放以加载 </span>
+
+		</div>
+		<div class="pull-refresh-content" ng-transclude>
+		</div>
+	</container>
+</div>
+

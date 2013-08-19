@@ -1,11 +1,5 @@
 module.exports = function (grunt) {
 
-    // Common amu module containing all modules for src
-    // findModule: Adds a given module to config
-
-    // 自动获取路径中的 module
-
-
     var foundModules = {};
 
     function findModule(name) {
@@ -20,7 +14,7 @@ module.exports = function (grunt) {
         var module = {
             name: name,
             moduleName: enquote(name),
-            srcFiles: grunt.file.expand("src/js/" + name.replace('.', '/') + ".js"),
+            srcFiles: grunt.file.expand("src/js/" + name.replace(/\./g, '/') + ".js"),
             dependencies: dependenciesForModule(name)
         };
         module.dependencies.forEach(findModule);
@@ -31,7 +25,7 @@ module.exports = function (grunt) {
 
     function dependenciesForModule(name) {
         var deps = [];
-        grunt.file.expand('src/js/' + name.replace('.', '/') + ".js")
+        grunt.file.expand('src/js/' + name.replace(/\./g, '/') + ".js")
             .map(grunt.file.read)
             .forEach(function (contents) {
                 //Strategy: find where module is declared,
@@ -54,11 +48,11 @@ module.exports = function (grunt) {
         return deps;
     }
 
-    grunt.registerTask('build', 'build by module require', function () {
+    grunt.registerTask('angular-concat-modules', 'angular-concat-modules', function () {
 
         var _ = grunt.util._;
 
-        findModule('app.main');
+        findModule(grunt.config('appModule'));
 
         var modules = grunt.config('modules');
 
@@ -66,14 +60,27 @@ module.exports = function (grunt) {
 
         var srcFiles = _.pluck(modules, 'srcFiles');
 
-        grunt.config('concat.dist.src', grunt.config('concat.dist.src')
-            .concat(srcFiles));
+        console.log(modules);
 
-        grunt.config('concat.dist_tpls.src', grunt.config('concat.dist_tpls.src')
-            .concat(srcFiles));
+        grunt.config('concat.dist', {
+            options: {
+                banner: '<%= meta.modules %>\n',
+                footer: '<%= isPhoneGap?endInit.phoneGap:endInit.web %>\n'
+            },
+            src: srcFiles, //src filled in by build task
+            dest: '<%= build %>/<%= filename %>-<%= version %>.js'
+        });
+        grunt.config('concat.dist_tpls', {
+            options: {
+                banner: '<%= meta.all %>\n',
+                footer: '<%= isPhoneGap?endInit.phoneGap:endInit.web %>\n'
+            },
+            src: ["<%= build %>/tmp/tpls.js", srcFiles], //src filled in by build task
+            dest: '<%= build %>/<%= filename %>-tpls-<%= version %>.js'
+        });
 
-//        grunt.task.run(['ngtemplates', 'concat', 'uglify']);
-        grunt.task.run(['ngtemplates', 'concat']);
+//        grunt.task.run(['concat:dist', 'concat:dist_tpls']);
+        grunt.task.run(['concat:dist_tpls']);
     });
 
     return grunt;

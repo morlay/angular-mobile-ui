@@ -1,0 +1,6 @@
+<div ng-controller="NavLeftCtrl" class="drawer-list-group">
+	<a class="drawer-list-group-item" ng-click="switchPage(item)" ng-repeat="item in navList"
+	   ng-class="{'active':item.active}">
+		<span ng-bind="item.name"></span>
+	</a>
+</div>

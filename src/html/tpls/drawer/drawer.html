@@ -1,0 +1,8 @@
+<div class="drawer">
+	<div class="drawer-left" ng-class="{'show':drawers.leftActive}" ng-include="drawerLeftTpl">
+	</div>
+	<div class="drawer-right" ng-class="{'show':drawers.rightActive}" ng-include="drawerRightTpl">
+	</div>
+	<div class="drawer-up" ng-class="{'drawer-left-show':drawers.leftActive,'drawer-right-show':drawers.rightActive}"
+		 ng-transclude></div>
+</div>

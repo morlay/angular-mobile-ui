@@ -1,0 +1,23 @@
+<div ng-controller="NavRightCtrl" class="drawer-list-group">
+	<div class="drawer-user-info">
+		<span class="user-img">
+			<img src="" alt=""/>
+		</span>
+		<span class="user-info">
+			<span class="user-name">
+				用户名
+			</span>
+			<span class="user-value">
+				1100
+			</span>
+		</span>
+
+	</div>
+
+	<a class="drawer-list-group-item" ng-click="switchPage(item)" ng-repeat="item in navList">
+		<span ng-bind="item.name"></span>
+	</a>
+	<a class="drawer-list-group-item" ng-click="logout()">
+		注销登录
+	</a>
+</div>

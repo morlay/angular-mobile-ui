@@ -1,0 +1,24 @@
+.error-alert {
+  .dock-fill();
+  min-width: 30%;
+  max-width: 70%;
+  height: 36px;
+  padding: 7px 10px;
+  text-align: center;
+  color: white;
+  background: black;
+  margin: auto auto 120px;
+  z-index: 0;
+  opacity: 0;
+  &.fade {
+    z-index: 1000;
+    -webkit-transform-style: preserve-3d;
+
+    .transition(0.5s);
+    opacity: 0;
+
+    &.in {
+      opacity: 0.9;
+    }
+  }
+}

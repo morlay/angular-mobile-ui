@@ -1,0 +1,61 @@
+.swipe-tabset {
+  .dock-fill();
+}
+
+@swipe-nav-height: 36px;
+
+.swipe-nav {
+
+
+
+  .dock-tl();
+  padding: 0;
+  right: 0;
+  height: @swipe-nav-height;
+  line-height: @swipe-nav-height;
+  max-height: 100%;
+  background: @gray-light;
+  list-style-type: none;
+
+  li {
+    float: left;
+    display: block;
+    .canBeClicked();
+    color: white;
+    text-align: center;
+    .transition(0.3s);
+    &.active {
+      margin-top: -3px;
+      border-bottom: 3px solid @brand-info;
+    }
+  }
+}
+
+.swipe-tab-content {
+  background: @gray-lighter;
+  .dock-bl();
+  right: 0;
+  top: @swipe-nav-height;
+  overflow: hidden;
+  .clearfix();
+}
+
+.swipe-container,
+.swipe-tab-pane {
+  background: white;
+  display: block;
+  position: relative;
+  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
+
+}
+
+.swipe-tab-pane {
+  float: left;
+}
+
+.animate {
+  -webkit-transform-style: preserve-3d;
+  .transition(0.3s);
+}

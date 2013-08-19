@@ -13,7 +13,7 @@ UI Kits for PhoneGap or Mobile Web App
 
 ## Demos
 
-coming soon ……
+https://googledrive.com/host/0Bwdui5aYcEA9WFB1TThKUWVCS28/index.html
 
 ## How To
 
@@ -21,7 +21,9 @@ coming soon ……
 2. install `node.js` and `npm`
 3. install grunt just `$ npm install -g grunt-cli`
 4. `$ npm install` in project path
-5. `$ grunt build` for concat all scripts
+5. `$ git submodule init`` `$ git submodule update`` for submodule
+6. `$ grunt release'` for concat all scripts
+7. `$ grunt watch'` for develop
 
 ## PhoneGap Plugins
 

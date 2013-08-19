@@ -57,3 +57,5 @@ bower_components/
 # develop files
 
 build/
+dist/css/
+dist/js/

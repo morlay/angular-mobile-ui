@@ -41,6 +41,10 @@ angular.injector(['ng']).invoke(['$rootScope', function ($rootScope) {
 
 var module = angular.module('utils.hammer', []);
 
+module.factory('Hammer', function () {
+    return Hammer;
+});
+
 GESTURES.forEach(function (gesture, idx) {
     var hammerGesture = 'hammer' + gesture[0].toUpperCase() + gesture.slice(1);
 

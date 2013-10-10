@@ -1,0 +1,13 @@
+<div class="modal-btn-group" ng-class="{unfold:isFold}">
+	<span class="modal-btn-group-bg" ng-click="isFold = false"></span>
+	<button class='btn-round modal-btn-group-btn-fold' ng-class="{unfold:isFold}" ng-click="isFold =!isFold">
+		<i class="icon-plus"></i>
+	</button>
+	<ul class="modal-btn-group-list" ng-class="{unfold:isFold}">
+		<li class="modal-btn-group-list-item" ng-repeat="btn in btnList" ng-click="btnListFuncInner(btn)"
+			mbg-style="$index">
+			<span class="modal-btn-group-list-item-title" ng-bind="btn.title"></span>
+			<span class="btn-round" ng-class="btn.icon"></span>
+		</li>
+	</ul>
+</div>

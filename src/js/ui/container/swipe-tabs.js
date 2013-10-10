@@ -1,19 +1,32 @@
 angular.module('ui.container.swipe-tabs', ['utils.hammer'])
-    .controller('SwipeTabsetController', ['$scope', '$element',
-        function ($scope, $element) {
+    .controller('SwipeTabsetController', [
+        '$scope'
+        , '$rootScope'
+        , function ($scope, $rootScope) {
 
             var ctrl = this,
                 tabs = ctrl.tabs = $scope.tabs = [];
+
+            $scope.curTab = null;
 
             ctrl.select = function (tab, isHammer) {
                 angular.forEach(tabs, function (item) {
                     item.active = false;
                 });
                 tab.active = true;
+
+                $scope.curTab = tab;
+
                 if (!isHammer) {
                     $scope.showPane(tabs.indexOf(tab));
                 }
             };
+
+
+            $scope.$watch('curTab', function (value) {
+                $rootScope.$broadcast('paneSwitchComplete', {currentPane: value});
+            });
+
 
             ctrl.addTab = function addTab(tab) {
                 tabs.push(tab);
@@ -36,6 +49,7 @@ angular.module('ui.container.swipe-tabs', ['utils.hammer'])
         }])
     .directive('swipeTabset', [
         '$window'
+
         , 'Hammer'
         , '$rootScope'
         , function ($window, Hammer, $rootScope) {
@@ -231,7 +245,7 @@ angular.module('ui.container.swipe-tabs', ['utils.hammer'])
             };
         }])
 
-    .directive('swipeTabHeadingTransclude', function () {
+    .directive('swipeTabHeadingTransclude', [function () {
         return {
             restrict: 'A',
             require: '^swipeTab',
@@ -244,7 +258,7 @@ angular.module('ui.container.swipe-tabs', ['utils.hammer'])
                 });
             }
         };
-    })
+    }])
 
     .directive('swipeTabContentTransclude', ['$compile', '$parse', function ($compile, $parse) {
         return {

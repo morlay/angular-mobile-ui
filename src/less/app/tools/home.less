@@ -1,0 +1,118 @@
+/* home 自适应 */
+.home-box-mixin(@width: 0, @margin-left: 0) {
+  width: @width;
+  padding-bottom: @width;
+  margin-left: @margin-left;
+}
+
+.home-media-mixin(@min-width, @width, @margin-left) {
+  @media only screen and (min-width: @min-width) {
+    .home-box-mixin(@width, @margin-left);
+  }
+}
+
+.home-media-mixin(@min-width, @max-width, @width, @margin-left) {
+  @media only screen and (min-width: @min-width) and (max-width: @max-width) {
+    .home-box-mixin(@width, @margin-left);
+  }
+}
+
+.home {
+  .clearfix();
+  padding-top: 40px;
+  background: #F3F0E9;
+  z-index: 1;
+  position: relative;
+  height: 100%;
+
+  .home-box {
+
+    .canBeClicked();
+    position: relative;
+    text-align: center;
+    margin-bottom: 70px;
+    float: left;
+    border-radius: 10px;
+
+    .home-media-mixin(0px, 128px, 80%, 10%);
+    .home-media-mixin(129px, 240px, 35%, 10%);
+    .home-media-mixin(241px, 700px, 24%, 7%);
+    .home-media-mixin(701px, 1200px, 20%, 4%);
+    .home-media-mixin(1201px, 15.2%, 4%);
+
+    &:after {
+      display: block;
+      content: "";
+
+      position: absolute;
+      top: -7px;
+      left: -7px;
+      right: -7px;
+      bottom: -7px;
+
+      z-index: -1;
+      border: 7px solid #fff;
+      border-radius: 10px;
+      background: #fff;
+    }
+    img {
+      width: 35%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+    h2 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      margin: 0 0 -30px 0;
+      color: #666;
+      width: 100%;
+      font-size: 14px;
+      font-weight: normal;
+      word-break: break-all;
+    }
+
+    &.color-1 {
+      background: #AAE690;
+      box-shadow: inset 0 0 7px darken(#AAE690, 30%);
+    }
+    &.color-2 {
+      background: #A1A4F3;
+      box-shadow: inset 0 0 7px darken(#A1A4F3, 30%);
+    }
+    &.color-3 {
+      background: #F0B593;
+      box-shadow: inset 0 0 7px darken(#F0B593, 30%);
+    }
+    &.color-4 {
+      background: #F4E9B3;
+      box-shadow: inset 0 0 7px darken(#F4E9B3, 30%);
+    }
+    &.color-5 {
+      background: #F19393;
+      box-shadow: inset 0 0 7px darken(#F19393, 30%);
+    }
+    &.color-6 {
+      background: #94DDF0;
+      box-shadow: inset 0 0 7px darken(#94DDF0, 30%);
+    }
+    &.color-0 {
+      background: #C892F0;
+      box-shadow: inset 0 0 7px darken(#C892F0, 30%);
+    }
+  }
+
+  .home-box-icon {
+    .dock-cc();
+
+    color: white;
+    font-size: 50px;
+    line-height: 50px;
+
+    height: 50px;
+  }
+}

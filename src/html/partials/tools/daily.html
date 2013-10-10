@@ -1,0 +1,27 @@
+<div class="page-toolbar">
+
+	<span class="page-tool-btn" ng-click="$navigate.back()">
+		<i class="icon-chevron-left"></i>
+	</span>
+
+	<!--<span class="page-tool-btn dock-tr" ng-click="toggleDrawerRight()">-->
+	<!--<i class="icon-user"></i>-->
+	<!--</span>-->
+
+	<span class="page-heading" ng-bind="pageHeading">
+		Test
+	</span>
+</div>
+<div class="page-content scroll-y" style="padding: 10px;">
+
+	<canvas chart type="Line" data="myLineChartData" options='options' auto-width="true" height="300"></canvas>
+	<canvas chart type="Bar" data="myLineChartData" options='options' auto-width="true" height="300"></canvas>
+	<canvas chart type="Radar" data="myLineChartData" options='options' height="300"></canvas>
+
+
+	<canvas chart type="PolarArea" data="myPolarAreaChartData" options='options' height="300"></canvas>
+	<canvas chart type="Pie" data="myPolarAreaChartData" options='options' height="300"></canvas>
+	<canvas chart type="Doughnut" data="myPolarAreaChartData" options='options' height="300"></canvas>
+
+
+</div>

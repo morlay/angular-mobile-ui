@@ -1,0 +1,72 @@
+<div class="page-toolbar" ng-controller="MapSearchCtrl">
+
+	<span class="page-tool-btn" ng-click="$navigate.back()">
+		<i class="icon-chevron-left"></i>
+	</span>
+
+	<!--<span class="page-tool-btn dock-tr" ng-click="toggleDrawerRight()">-->
+	<!--<i class="icon-user"></i>-->
+	<!--</span>-->
+
+
+	<span class="page-heading" ng-bind="pageHeading">
+	</span>
+
+
+	<span class="page-tool-btn icon-search search-btn"
+		  ng-class="{'show':isShowSearch}"
+		  btn-has-styles
+		  title="开始搜索"
+		  ng-click="beginSearch()">
+	</span>
+
+	<div class="search-box" ng-class="{'show':isShowSearch}">
+		<input class="search-input" ng-model="searchText"/>
+		<span class="search-cancel icon-remove"
+			  btn-has-styles
+			  title="取消搜索"
+			  ng-click="cancelSearch()">
+		</span>
+	</div>
+	<div class="search-list" ng-class="{'show':isShowSearch}">
+		<div class="dock-fill scroll-y">
+			<div class="list-group">
+				<a class="list-group-item" ng-repeat="building in buildingList|filter:searchText"
+				   ng-click="centerToBuilding(building)">
+					<span ng-bind="building.buildingName"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div class="page-content">
+	<div id="mapMain" class="dock-fill"></div>
+	<div id="mapControl">
+		<ul>
+			<li class="map-btn"
+
+				title="定位到当前"
+				ng-click="geoLocation()">
+
+				<i class="icon-male"></i>
+			</li>
+		</ul>
+	</div>
+
+	<div modal="isMapInfoModalOpen" close="closeMapInfoModal()" options="mapModalOpts">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 ng-bind="buildingInfo.buildingName">建筑</h4>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" ng-click="closeMapInfoModal()">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'untitledregular';
+  src: url('@{FontAwesomePath}/untitledregular-webfont.eot');
+  src: url('@{FontAwesomePath}/untitledregular-webfont.eot?#iefix') format('embedded-opentype'),
+  url('@{FontAwesomePath}/untitledregular-webfont.woff') format('woff'),
+  url('@{FontAwesomePath}/untitledregular-webfont.ttf') format('truetype'),
+  url('@{FontAwesomePath}/untitledregular-webfont.svg#untitledregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.icon-untitledregular() {
+  font-family: untitledregular;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em; // fixes ie7 issues
+}
+
+
+[class^="home-icon-"],
+[class*="home-icon-"] {
+  .icon-untitledregular();
+}
+
+.home-icon-news:before { content: 'a'; }
+.home-icon-school:before { content: 'b'; font-size: 1.3em;}
+.home-icon-bus:before { content: 'c';font-size: 0.8em; }
+.home-icon-map:before { content: 'd'; font-size: 0.9em; }
+.home-icon-timetable:before { content: 'e';font-size: 0.9em; }
+.home-icon-daily:before { content: 'f'; font-size: 1.1em; }
+.home-icon-wifi:before { content: 'g';font-size: 0.9em;}
+.home-icon-job:before { content: 'h'; }

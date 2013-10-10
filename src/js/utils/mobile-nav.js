@@ -4,14 +4,12 @@
  * @license MIT License http://goo.gl/Z8Nlo
  */
 
-// PhoneGap 中退出应用。
-
-//angular.module('ajoslin.mobile-navigate', [])
-//    .run(['$navigate', '$rootScope', function ($navigate, $rootScope) {
+//angular.module('utils.mobile-nav', [])
+//    .run(['$navigate', '$rootScope', function($navigate, $rootScope) {
 //        //Android back button functionality for phonegap
-//        document.addEventListener("deviceready", function () {
-//            document.addEventListener("backbutton", function () {
-//                $rootScope.$apply(function () {
+//        document.addEventListener("deviceready", function() {
+//            document.addEventListener("backbutton", function() {
+//                $rootScope.$apply(function() {
 //                    var backSuccess = $navigate.back();
 //                    if (!backSuccess) {
 //                        navigator.app.exitApp();
@@ -24,10 +22,8 @@
  * $change
  * Service to transition between two elements
  */
-
-angular.module('utils.mobile-nav', [])
-
-    .provider('$change', function () {
+angular.module('utils.mobile-nav',[])
+    .provider('$change', function() {
         var transitionPresets = {  //[nextClass, prevClass]
             //Modal: new page pops up, old page sits there until new page is over it
             'modal': ['modal', ''],
@@ -36,22 +32,23 @@ angular.module('utils.mobile-nav', [])
         var defaultOptions = {
             'prefix': 'amu-'
         };
+
         var IN_CLASS = "in";
         var OUT_CLASS = "out";
         var REVERSE_CLASS = "reverse";
         var DONE_CLASS = "done";
         var ANIMATION_END = "animationName" in document.documentElement.style ? "animationend" : "webkitAnimationEnd";
 
-        this.setTransitionPreset = function (transitionName, inClass, outClass) {
+        this.setTransitionPreset = function(transitionName, inClass, outClass) {
             inClass = inClass || '';
             outClass = outClass || inClass; //Default to outClass same as inClass
             transitionPresets[transitionName] = [inClass, outClass];
         };
-        this.options = function (opts) {
+        this.options = function(opts) {
             defaultOptions = angular.extend(defaultOptions, opts || {});
         };
 
-        this.$get = ['$q', '$rootScope', function ($q, $rootScope) {
+        this.$get = ['$q', '$rootScope', function($q, $rootScope) {
 
             return function change(next, prev, transType, reverse, options) {
                 options = angular.extend(options || {}, defaultOptions);
@@ -64,7 +61,7 @@ angular.module('utils.mobile-nav', [])
                 //@param classes: Array{string}
                 //@return string classNames
                 function buildClassString(classes) {
-                    return classes.reduce(function (accumulator, cls) {
+                    return classes.reduce(function(accumulator, cls) {
                         return accumulator + (cls ? (' ' + options.prefix + cls) : '');
                     }, '');
                 }
@@ -77,7 +74,7 @@ angular.module('utils.mobile-nav', [])
                     [transType, transType];
 
                 //Hack for white flash: z-index stops flash, offsetWidth thing forces z-index to apply
-                next.css('z-index', '-100');
+                next.css('z-index','-100');
                 next[0].offsetWidth += 0;
 
                 var nextClasses = buildClassString([
@@ -101,7 +98,7 @@ angular.module('utils.mobile-nav', [])
                 next[0].offsetWidth += 0;
 
                 function done() {
-                    $rootScope.$apply(function () {
+                    $rootScope.$apply(function() {
                         deferred.resolve();
                     });
                 }
@@ -116,22 +113,22 @@ angular.module('utils.mobile-nav', [])
                     deferred.resolve();
                 }
 
-                deferred.promise.then(function () {
+                deferred.promise.then(function() {
                     boundElement && boundElement.unbind(ANIMATION_END, done);
                     next.removeClass(nextClasses);
                     prev && prev.removeClass(prevClasses);
                 });
 
                 //Let the user of change 'cancel' to finish transition early if they wish
-                deferred.promise.cancel = function () {
+                deferred.promise.cancel = function() {
                     deferred.resolve();
                 };
                 return deferred.promise;
             };
         }];
     })
-    .provider('$navigate', function () {
-        this.$get = ['$rootScope', '$location', '$route', function ($rootScope, $location, $route) {
+    .provider('$navigate', function() {
+        this.$get = ['$rootScope', '$location', '$route', function($rootScope, $location, $route) {
             var nav = {},
                 navHistory = []; //we keep our own version of history and ignore window.history
 
@@ -141,7 +138,7 @@ angular.module('utils.mobile-nav', [])
                     _isReverse = isReverse,
                     _onceTransition;
 
-                this.transition = function () {
+                this.transition = function() {
                     var trans;
                     if (_onceTransition) {
                         trans = _onceTransition;
@@ -151,17 +148,13 @@ angular.module('utils.mobile-nav', [])
                     }
                     return trans;
                 };
-                this.path = function () {
-                    return _path;
-                };
-                this.reverse = function () {
-                    return _isReverse;
-                };
+                this.path = function() { return _path; };
+                this.reverse = function() { return _isReverse; };
 
                 //For setting a transition on a page - but only one time
                 //Eg say on startup, we want to transition in with 'none',
                 //but want to be 'slide' after that
-                this.transitionOnce = function (trans) {
+                this.transitionOnce = function(trans) {
                     _onceTransition = trans;
                 };
             }
@@ -185,8 +178,7 @@ angular.module('utils.mobile-nav', [])
                 navigate(nav.next);
                 nav.onRouteSuccess = null;
             }
-
-            $rootScope.$on('$routeChangeSuccess', function ($event, next, last) {
+            $rootScope.$on('$routeChangeSuccess', function($event, next, last) {
                 // Only navigate if it's a valid route and it's not gonna just redirect immediately
                 if (!next.$$route || !next.$$route.redirectTo) {
                     (nav.onRouteSuccess || defaultRouteSuccess)($event, next, last);
@@ -206,21 +198,21 @@ angular.module('utils.mobile-nav', [])
                 }
                 $location.path(path);
                 //Wait for successful route change before actually doing stuff
-                nav.onRouteSuccess = function ($event, next, last) {
+                nav.onRouteSuccess = function($event, next, last) {
                     nav.current && navHistory.push(nav.current);
                     nav.next = new Page(path, transition || (next.$$route && next.$$route.transition), isReverse);
                     navigate(nav.next, nav.current, false);
                 };
             };
             //Sometimes you want to erase history
-            nav.eraseHistory = function () {
+            nav.eraseHistory = function() {
                 navHistory.length = 0;
             };
-            nav.back = function () {
+            nav.back = function() {
                 if (navHistory.length > 0) {
-                    var previous = navHistory[navHistory.length - 1];
+                    var previous = navHistory[navHistory.length-1];
                     $location.path(previous.path());
-                    nav.onRouteSuccess = function () {
+                    nav.onRouteSuccess = function() {
                         navHistory.pop();
                         nav.next = previous;
                         navigate(nav.next, nav.current, true);
@@ -234,7 +226,7 @@ angular.module('utils.mobile-nav', [])
         }];
     })
     .directive('mobileView', ['$rootScope', '$compile', '$controller', '$route', '$change', '$q',
-        function ($rootScope, $compile, $controller, $route, $change, $q) {
+        function($rootScope, $compile, $controller, $route, $change, $q) {
 
             function link(scope, viewElement, attrs) {
                 //Insert page into dom
@@ -280,7 +272,7 @@ angular.module('utils.mobile-nav', [])
                             var promise = $change(dest.element, (source ? source.element : null),
                                 transition, reverse);
 
-                            promise.then(function () {
+                            promise.then(function() {
                                 if (source) {
                                     $rootScope.$broadcast('$pageTransitionSuccess', dest, source);
                                     source.scope.$destroy();
@@ -300,14 +292,14 @@ angular.module('utils.mobile-nav', [])
                         //The next page will be inserted, but not transitioned in until the promise
                         //is fulfilled.
                         var deferTransitionPromise = scope.$eval(attrs.deferTransition) || $q.when();
-                        deferTransitionPromise.cancel = function () {
+                        deferTransitionPromise.cancel = function() {
                             cancelled = true;
                             //Undo display none from waiting for transition
                             dest.element.css('display', '');
                         };
 
                         var cancelled = false;
-                        deferTransitionPromise.then(function () {
+                        deferTransitionPromise.then(function() {
                             if (!cancelled) {
                                 //Undo display none from waiting for transition
                                 dest.element.css('display', '');
@@ -317,23 +309,20 @@ angular.module('utils.mobile-nav', [])
 
                         return deferTransitionPromise;
                     }
-
                     currentTrans && currentTrans.cancel();
                     currentTrans = changePage(dest, source, reverse);
                 });
             }
-
             return {
                 restrict: 'EA',
                 link: link
             };
         }])
-
-    .directive('scrollable', ['$route', function ($route) {
+    .directive('scrollable', ['$route', function($route) {
         var scrollCache = {};
         return {
             restrict: 'EA',
-            link: function (scope, elm, attrs) {
+            link: function(scope, elm, attrs) {
                 var route = $route.current ? $route.current.$$route : {};
                 var template = route.templateUrl || route.template;
                 var rawElm = elm[0];
@@ -342,14 +331,14 @@ angular.module('utils.mobile-nav', [])
                 //If we did, set it
                 if (template) {
                     //Set oldScroll after a timeout so the page has time to fully load
-                    setTimeout(function () {
+                    setTimeout(function() {
                         var oldScroll = scrollCache[template];
                         if (oldScroll) {
                             rawElm.scrollTop = oldScroll;
                         }
                     });
 
-                    scope.$on('$destroy', function () {
+                    scope.$on('$destroy', function() {
                         scrollCache[template] = rawElm.scrollTop;
                     });
                 }

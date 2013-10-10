@@ -5,19 +5,27 @@ angular.module("app.nav.nav-right", [])
         , '$navigate'
         , 'toolList'
         , function ($scope, $rootScope, $navigate, toolList) {
-            $scope.$navigate = $navigate;
             $scope.navList = [];
 
             angular.forEach(toolList, function (item) {
-                if (item.navList == "right") {
+                if (item.navList == "left") {
                     $scope.navList.push(item);
                 }
             });
 
 
-            $scope.logout = function () {
-                $navigate.go('/');
-            };
+            $rootScope.$on('$routeChangeSuccess', function (event, msg) {
+                angular.forEach($scope.navList, function (item) {
+                    item.active = false;
+                    if (msg.path == item.path) {
+                        item.active = true;
+                    }
+                });
+            });
+
+
+//
+//
 
 
             $scope.switchPage = function (nav) {

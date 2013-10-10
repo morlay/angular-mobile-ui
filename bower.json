@@ -1,0 +1,18 @@
+{
+    "name": "amu",
+    "dependencies": {
+        "angular": "1.2.0-rc.2",
+        "angular-route": "1.2.0-rc.2",
+        "angular-resource": "1.2.0-rc.2",
+        "angular-cookies": "1.2.0-rc.2",
+        "angular-sanitize": "1.2.0-rc.2",
+        "angular-touch": "1.2.0-rc.2",
+        "font-awesome": "3.2.1",
+        "hammerjs": "1.0.5",
+        "bootstrap": "https://github.com/twbs/bootstrap/archive/v3.0.0.zip"
+    },
+    "devDependencies": {
+        "angular-mocks": "1.2.0-rc.2",
+        "angular-scenario": "1.2.0-rc.2"
+    }
+}

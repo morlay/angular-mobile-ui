@@ -11,7 +11,7 @@ angular.module('ui.container.modal', ['ui.common.dialog'])
       // Create a dialog with the template as the contents of the directive
       // Add the current scope as the resolve in order to make the directive scope as a dialog controller scope
       opts = angular.extend(opts, {
-        template: elm.html(), 
+        template: elm.html(),
         resolve: { $scope: function() { return scope; } }
       });
       var dialog = $dialog.dialog(opts);
@@ -23,9 +23,9 @@ angular.module('ui.container.modal', ['ui.common.dialog'])
           $parse(attrs.close)(scope);
         };
       } else {
-        setClosed = function() {         
+        setClosed = function() {
           if (angular.isFunction($parse(shownExpr).assign)) {
-            $parse(shownExpr).assign(scope, false); 
+            $parse(shownExpr).assign(scope, false);
           }
         };
       }

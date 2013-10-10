@@ -1,0 +1,146 @@
+#mapControl {
+  .dock-tr();
+  margin: 12px;
+  width: 44px;
+  z-index: 50;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    position:relative;
+
+    li {
+      margin: 0;
+
+      list-style-type: none;
+    }
+
+  }
+}
+
+.map-btn {
+  position: relative;
+  height: 44px;
+  width: 44px;
+  line-height: 44px;
+
+  font-size: 24px;
+  text-align: center;
+
+  background: white;
+
+  color: @gray-light;
+
+
+  .canBeClicked();
+
+  &.down,
+  &.active,
+  &.hover {
+    background: @gray-lighter;
+  }
+}
+
+
+
+.search-btn {
+  .dock-tr();
+  opacity: 1;
+  &.show {
+	opacity: 0;
+  }
+}
+
+.search-box {
+  .dock-tr();
+  bottom: 0;
+  width: 400px;
+
+  display: none;
+  background: @brand-primary;
+  z-index: 20;
+  &.show {
+	display: block;
+  }
+}
+
+.search-input {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: auto;
+  right: 52px;
+  font-size: 18px;
+  color: white;
+  border: 0;
+  background: @brand-primary;
+  border-bottom: 2px solid white;
+  &:focus {
+	outline: 0;
+  }
+
+  padding-left: 7px;
+
+}
+
+.search-cancel {
+  .dock-tr();
+  color: white;
+  width: 50px;
+  line-height: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 24px;
+  .canBeClicked();
+  &.hover {
+	background: @brand-info;
+  }
+}
+
+.search-list {
+
+  .dock-tr();
+  top: 50px;
+  width: 400px;
+  height: 400px;
+
+
+  background: white;
+
+
+
+  -webkit-transform-style: preserve-3d;
+  .translate3d(0, -150%, 0);
+  .transition(0.15s linear);
+
+  z-index: 2;
+
+
+  .box-shadow(0 0 10px fadeout(black, 80%));
+
+  &.show {
+
+	.translate3d(0, 0, 0);
+  }
+}
+
+
+
+.modal{
+    &.in{
+      display:block;
+    }
+}
+
+// Tablets & small desktops only
+@media screen and (max-width: @screen-sm) {
+  .search-box {
+	left: 0;
+	width: auto;
+  }
+
+  .search-list {
+	left: 0;
+	width: auto;
+  }
+}

@@ -3,3 +3,25 @@
     cursor: pointer;
   }
 }
+
+
+.scaleY(@ratio){
+  -webkit-transform: scale(1,@ratio);
+  -moz-transform: scale(1,@ratio);
+  transform: scale(1,@ratio);
+}
+
+
+.animation-delay(@time){
+  -webkit-animation-delay: @time;
+  -moz-animation-delay: @time;
+  animation-delay: @time;
+}
+
+
+.animation (@param) {
+  animation: @param;
+  -moz-animation: @param;
+  -webkit-animation: @param;
+}
+

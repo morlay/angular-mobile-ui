@@ -1,0 +1,59 @@
+<div class="page-toolbar">
+
+	<span class="page-tool-btn" ng-click="$navigate.back()">
+		<i class="icon-chevron-left"></i>
+	</span>
+
+	<!--<span class="page-tool-btn dock-tr" ng-click="toggleDrawerRight()">-->
+	<!--<i class="icon-user"></i>-->
+	<!--</span>-->
+
+	<span class="page-heading" ng-bind="pageHeading">
+		Test
+	</span>
+</div>
+<div class="page-content" style="padding: 10px 40px;background: #F7F7F7;">
+	<img style="margin: 20px auto;display: block;width:100%" src="img/logo_2.png"/>
+
+	<form class="form-horizontal" style="margin:0 20px;">
+
+
+		<div class="form-group">
+			<div style="position: relative;">
+				<i class="dock-tl icon-user" style="font-size:16px;margin:10px;color: #ccc"></i>
+				<input class="form-control" style="padding-left: 30px;" type="text" placeholder="请输入学号"
+					   ng-model="loginInfo.userName">
+			</div>
+			<div style="position: relative;">
+				<i class="dock-tl icon-lock" style="font-size:16px;margin:10px;color: #ccc"></i>
+				<input class="form-control" style="padding-left: 30px;" type="password" placeholder="密码"
+					   ng-model="loginInfo.password">
+			</div>
+		</div>
+
+		<div class="form-group" ng-show="isBackErrorMsg">
+			<div class="well well-small">
+				<i class="icon-warning"></i> <span ng-bind="errorMsg"></span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<button type="submit" class="btn btn-info btn-block" ng-click="login()" ng-disabled="loginBtnDisable">登
+				录
+			</button>
+		</div>
+
+		<div class="form-group">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" ng-model="isRemember"/> 记住我
+				</label>
+
+				<label>
+					<span class="pull-right" ng-click="resetPassword()"> 忘记密码？</span>
+				</label>
+			</div>
+		</div>
+	</form>
+</div>
+

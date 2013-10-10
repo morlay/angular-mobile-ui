@@ -1,0 +1,26 @@
+<div class="page-toolbar">
+
+	<span class="page-tool-btn" ng-click="$navigate.back()">
+		<i class="icon-chevron-left"></i>
+	</span>
+
+	<span class="page-heading" ng-bind="pageHeading">
+	</span>
+</div>
+<div class="page-content">
+	<div class="list-group notice-list">
+		<a ng-repeat="notice in noticeList"
+		   ng-click="showMoreNotice()"
+
+		   class="list-group-item">
+
+			<span class="badge">14</span>
+			<h4 class="list-group-item-heading"><span ng-bind="notice.from"></span> - <span
+					ng-bind="notice.title"></span></h4>
+
+			<p class="list-group-item-text" ng-bind="notice.content"></p>
+
+		</a>
+	</div>
+</div>
+

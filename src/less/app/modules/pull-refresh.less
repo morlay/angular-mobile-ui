@@ -1,0 +1,122 @@
+.pull-refresh {
+  .dock-fill();
+  overflow: hidden;
+  background: @gray-lighter;
+}
+
+.pull-refresh-loader {
+  display: block;
+  .dock-tc();
+  overflow: hidden;
+  height:5px;
+  width: 50%;
+  z-index: 400;
+  
+  background: lighten(@brand-info,20%);
+}
+
+.pull-refresh-container {
+  .dock-fill();
+  background: white;
+}
+
+.pull-refresh-content {
+  .dock-fill();
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.pull-refresh-message {
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  line-height: 60px;
+
+  height: 60px;
+
+  text-align: center;
+}
+
+/* icon */
+.pull-refresh-icon {
+  position: absolute;
+  left: 20px;
+
+  /* arrow icon */
+  &.arrow {
+    background: url(../img/arrow.png) no-repeat;
+    width: 71px;
+    height: 28px;
+
+    .backface-visibility(hidden);
+    .transition(.3s);
+    .rotate(90deg);
+
+    &.arrow-up {
+      .rotate(-90deg);
+    }
+  }
+  &.loading {
+    background: url(../img/spinner.png) no-repeat;
+    width: 19px;
+    height: 19px;
+    background-size: 100%;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+
+    animation: rotate 1s linear infinite;
+    -o-animation: rotate 1s linear infinite;
+    -ms-animation: rotate 1s linear infinite;
+    -moz-animation: rotate 1s linear infinite;
+    -webkit-animation: rotate 1s linear infinite;
+  }
+}
+
+/* spinner icon */
+/* rotate spinner with css animation */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes rotate {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(360deg);
+  }
+}
+
+@-ms-keyframes rotate {
+  0% {
+    -ms-transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes rotate {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}

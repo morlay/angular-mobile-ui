@@ -1,0 +1,349 @@
+<div class="page-toolbar">
+
+	<span class="page-tool-btn" ng-click="$navigate.back()">
+		<i class="icon-chevron-left"></i>
+	</span>
+
+	<span class="page-tool-btn dock-tr" ng-click="showTaskModal()">
+		<i class="icon-plus"></i>
+	</span>
+
+	<span class="page-heading" ng-bind="pageHeading">
+		Test
+	</span>
+</div>
+<div class="page-content">
+
+<div class="dock-fill"
+     ng-controller="CalendarCtrl.Month"
+     ng-show="(calendarType=='month')">
+
+    <div class="calendar-title">
+        <div class="calendar-nav btn-group">
+            <button class="btn btn-default" ng-click="move(-1)"><i class='icon-chevron-left'></i></button>
+            <button class="btn btn-default" ng-click="move(1)"><i class='icon-chevron-right'></i></button>
+        </div>
+        <div class="calendar-title-text">
+            <span ng-bind="curMonth[0] | date:'yyyy 年 MM 月'"></span>
+        </div>
+
+        <table class="calendar-table-title">
+            <tr>
+                <td>周日</td>
+                <td>周一</td>
+                <td>周二</td>
+                <td>周三</td>
+                <td>周四</td>
+                <td>周五</td>
+                <td>周六</td>
+            </tr>
+        </table>
+    </div>
+    <div class="calendar-content">
+        <table class="calendar-table-month" hammer-swipeleft='move(-1)' hammer-swiperight='move(1)'>
+            <tr ng-repeat="row in dateRows">
+                <td ng-repeat="dt in row">
+                    <div class="cell"
+                         ng-class="{'selected': dt.isSelected, curMouth: dt.isCurMonth, today: dt.isToday}"
+                         ng-click="select(dt)">
+
+                        <div class="task-date">
+                            <span ng-bind="dt.date.getDate()"></span>
+                        </div>
+
+
+                        <div class="task-sign-box">
+							<span ng-repeat="taskType in dt.taskTypes" class="{{'task-sign sign-'+taskType.id}}"
+                                  ng-show='taskType.isHas'></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="task-list" ng-class="{'expend':isExpendTaskList}">
+            <div class="task-list-expend" ng-class="{'expend':isExpendTaskList}"
+                 ng-click="isExpendTaskList=!isExpendTaskList;">
+                <span class="caret"></span>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item task-list-group-item {{ 'sign-'+task.scheduleType }}"
+                   ng-repeat="task in selectDateObj.taskList | orderBy: 'startTime' " ng-click="showTaskModal(task)">
+                    <h4 class="list-group-item-heading">
+                        <span ng-bind="task.startTime | date:'HH:mm'"></span>
+                        ~ <span ng-bind="task.endTime | date:'HH:mm'"></span>
+                    </h4>
+
+                    <p class="list-group-item-text" ng-bind="task.summary"></p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="dock-fill"
+     ng-controller="CalendarCtrl.Week"
+     ng-show="(calendarType=='week')">
+
+    <div class="calendar-title">
+
+
+        <div class="calendar-nav btn-group">
+            <button class="btn btn-default" ng-click="move(-1)"><i class='icon-chevron-left'></i></button>
+            <button class="btn btn-default" ng-click="move(1)"><i class='icon-chevron-right'></i></button>
+        </div>
+
+        <div class="calendar-title-text">
+            第 <span ng-bind="weekDates[0].dateObj.isoWeek"></span> 周
+			<span style='font-size: 0.8em'>
+				（<span ng-bind="weekDates[0].dateObj.date[0] | date:'MM/dd'"></span>
+				~ <span ng-bind="weekDates[6].dateObj.date[0] | date:'MM/dd'"></span>）
+			</span>
+
+        </div>
+
+        <table class="calendar-table-title">
+            <tr>
+                <td style="width: 40px">#</td>
+                <td>周日</td>
+                <td>周一</td>
+                <td>周二</td>
+                <td>周三</td>
+                <td>周四</td>
+                <td>周五</td>
+                <td>周六</td>
+            </tr>
+        </table>
+        <table class="calendar-table-day all-day-tasks">
+            <tr>
+                <td style="width: 40px"></td>
+                <td ng-repeat="dt in weekDates">
+                    <div class="cell" ng-style="{'height':allDayMax*20+'px'}">
+                        <div ng-repeat="task in dt.allDay" ng-click="showTaskModal(task)"
+                             class="day-event-marker {{'sign-'+task.scheduleType }}"
+                             ng-style="{top:20 * $index + 'px'}">
+                            <span ng-bind="task.summary"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="calendar-content scroll-y">
+        <table class="calendar-table-day"
+               hammer-swipeleft='move(-1)'
+               hammer-swiperight='move(1)'
+               ng-style="{'marginTop':allDayMax*20+'px'}">
+            <tr style="height: 0;">
+                <td style="width: 40px"></td>
+                <td ng-repeat="dt in weekDates">
+                    <div style="position: relative;width:100%;z-index: 5;">
+                        <div class="day-event-marker {{'sign-'+task.scheduleType }}" ng-click="showTaskModal(task)"
+                             ng-repeat="task in dt.inDay"
+                             ng-style="{top:41 * task.topFix +1 + 'px',height:41 *task.height + 'px',width:100/task.n+'%',left:task.col*100/task.n+'%'}">
+                            <span ng-bind="task.summary"></span>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+            <tr ng-repeat="row in hourRows">
+                <td style="width: 40px">
+                    <span class="hour-text" ng-bind="$index"></span>
+                </td>
+                <td ng-repeat="dt in row">
+                    <div class="cell"
+                         ng-class="{'selected': dt.isSelected}"
+                         ng-click="select(dt)">
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+
+</div>
+
+<div class="dock-fill"
+     ng-controller="CalendarCtrl.Day"
+     ng-show="(calendarType=='day')">
+
+    <div class="calendar-title">
+
+        <div class="calendar-nav btn-group">
+            <button class="btn btn-default" ng-click="move(-1)"><i class='icon-chevron-left'></i></button>
+            <button class="btn btn-default" ng-click="move(1)"><i class='icon-chevron-right'></i></button>
+        </div>
+
+        <div class="calendar-title-text">
+            <span ng-bind="curDateObj.date[0] | date:'yyyy 年 MM 月 dd 日'"></span>
+        </div>
+
+        <table class="calendar-table-title">
+            <tr>
+                <td style="width: 40px">#</td>
+                <td></td>
+            </tr>
+
+        </table>
+        <table class="calendar-table-day all-day-tasks">
+            <tr>
+                <td style="width: 40px"></td>
+                <td>
+                    <div class="cell" ng-style="{'height':dayDates.allDay.length *20+'px'}">
+                        <div ng-repeat="task in dayDates.allDay" ng-click="showTaskModal(task)"
+                             class="day-event-marker {{'sign-'+task.scheduleType }}"
+                             ng-style="{top:20 * $index + 'px'}">
+                            <span ng-bind="task.summary"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="calendar-content scroll-y">
+
+
+        <table class="calendar-table-day"
+               hammer-swipeleft='move(-1)'
+               hammer-swiperight='move(1)'
+               ng-style="{'marginTop':dayDates.allDay.length *20+'px'}">
+            <tr style="height: 0;">
+                <td style="width: 40px"></td>
+                <td>
+                    <div style="position: relative;width:100%;z-index: 10;">
+                        <div ng-repeat="task in dayDates.inDay"
+                             class="day-event-marker {{'sign-'+task.scheduleType }}"
+                             ng-click="showTaskModal(task)"
+                             ng-style="{top:41 * task.topFix + 1 + 'px',height:41 *task.height + 'px',width:100/task.n+'%',left:task.col*100/task.n+'%'}">
+                            <span ng-bind="task.summary"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat="row in hourRow">
+                <td style="width: 40px">
+                    <span class="hour-text" ng-bind="$index"></span>
+                </td>
+                <td>
+                    <div class="cell"
+                         ng-class="{'selected': row.isSelected}"
+                         ng-click="select(row)">
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+
+</div>
+
+<div class="calendar-tabs btn-group">
+    <button type="button" class="btn btn-default" ng-model="calendarType" btn-radio="'month'">月</button>
+    <button type="button" class="btn btn-default" ng-model="calendarType" btn-radio="'week'">周</button>
+    <button type="button" class="btn btn-default" ng-model="calendarType" btn-radio="'day'">天</button>
+</div>
+
+
+<div modal="isTaskModalOpen" close="closeTaskModal()" options="modalOpts">
+    <div class="modal-dialog">
+        <div class="modal-content" ng-controller="TaskViewCtrl">
+            <div ng-show="curTask.scheduleType == 1">
+                <div class="modal-header">
+                    <h4><span ng-bind="curTask.detail.summary"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <td>课程名</td>
+                            <td><span ng-bind="curTask.detail.courseClassName"></span></td>
+                        </tr>
+                        <tr>
+                            <td>上课时间</td>
+                            <td><span ng-bind="curTask.startTimeObj[0] | date: 'HH:mm'"></span> ~ <span
+                                    ng-bind="curTask.endTimeObj[0] | date: 'HH:mm'"></span></td>
+                        </tr>
+                        <tr>
+                            <td>所在建筑</td>
+                            <td><span ng-bind="curTask.detail.buildingName"></span></td>
+                        </tr>
+                        <tr>
+                            <td>教室</td>
+                            <td><span ng-bind="curTask.detail.roomId"></span></td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" ng-click="closeTaskModal()">关闭</button>
+                </div>
+            </div>
+            <div ng-show="curTask.scheduleType == 2">
+                <div class="modal-header">
+                    <h4><span ng-bind="curTask.summary"></span></h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input ng-show="isAddTask||isModifying" class="form-control"
+                               ng-model="curTask.summary" placeholder="事件名称"/>
+						<span ng-hide="isAddTask||isModifying">
+							事件名称 <span ng-bind="curTask.summary"></span>
+						</span>
+
+                    </div>
+                    <div class="form-group">
+                        <input ng-show="isAddTask||isModifying" class="form-control" type="datetime-local" name="dtl"
+                               ng-model="curTask.startTimeString"
+                               placeholder="开始时间"/>
+						<span ng-hide="isAddTask||isModifying">
+							开始时间 <span ng-bind="curTask.startTime | date: 'yyyy 年 MM 月 dd 日 HH:mm'"></span>
+						</span>
+                    </div>
+                    <div class="form-group">
+                        <input ng-show="isAddTask||isModifying" class="form-control" type="datetime-local" name="dtl"
+                               ng-model="curTask.endTimeString"
+                               placeholder="结束时间"/>
+						<span ng-hide="isAddTask||isModifying">
+							结束时间 <span ng-bind="curTask.endTimeObj[0] | date: 'yyyy 年 MM 月 dd 日 HH:mm'"></span>
+						</span>
+                    </div>
+                    <div class="form-group">
+                        <textarea ng-show="isAddTask||isModifying" class="form-control" type="text"
+                                  ng-model="curTask.detail" placeholder="详细内容"></textarea>
+						<span ng-hide="isAddTask||isModifying">
+							详细内容 <span ng-bind="curTask.detail"></span>
+						</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" ng-click="closeTaskModal()">关闭</button>
+
+
+                    <button type="button" ng-hide="isAddTask" class="btn btn-danger" ng-click="removeTask()">删除
+                    </button>
+
+
+                    <button type="button" ng-hide="isAddTask||!isModifying" class="btn btn-primary"
+                            ng-click="modifyTask()">确定
+                    </button>
+
+                    <button type="button" ng-hide="isAddTask||isModifying" class="btn btn-primary"
+                            ng-click="preModifyTask()">
+                        修改
+                    </button>
+
+                    <button type="button" ng-show="isAddTask" class="btn btn-primary" ng-click="addTask()">新建</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

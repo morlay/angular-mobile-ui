@@ -1,0 +1,101 @@
+.modal-btn-group {
+  .dock-br();
+  width: 100%;
+
+  &.unfold {
+
+    height: 100%;
+
+    z-index: 2000;
+
+    .modal-btn-group-bg {
+      background-color: fadeout(black, 65%);
+    }
+
+  }
+
+}
+
+.modal-btn-group-bg {
+  .dock-fill();
+  display: block;
+  -webkit-transform-style: preserve-3d;
+  .transition(0.3s);
+  .canBeClicked();
+}
+
+.modal-btn-group-btn-fold {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+
+  .transition(0.15s);
+  .rotate(0deg);
+
+  &.unfold {
+    .rotate(-225deg);
+  }
+
+  z-index: 10;
+}
+
+.modal-btn-group-list {
+  .dock-br();
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  -webkit-transform-style: preserve-3d;
+  .transition(0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+  .scale(0.6);
+  //  right: 5px;
+  opacity: 0;
+
+  &.unfold {
+    .scale(1);
+    //    right: 0;
+    opacity: 1;
+  }
+  z-index: 5;
+}
+
+.btn-round {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+
+  font-size: 25px;
+  line-height: 50px;
+  text-align: center;
+
+  color: white;
+  background: @brand-primary;
+
+}
+
+.modal-btn-group-list-item {
+  .canBeClicked();
+  margin: 0px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.modal-btn-group-list-item-title {
+  position: absolute;
+  right: 60px;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  height: 20px;
+  line-height: 20px;
+  font-size: 14px;
+  color: white;
+  background: @gray;
+  border-radius: 20px;
+  padding: 0 7px;
+}

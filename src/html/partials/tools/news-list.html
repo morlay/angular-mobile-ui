@@ -1,0 +1,23 @@
+<swipe-tabset>
+	<swipe-tab heading="{{newsTag.name}}" ng-repeat="newsTag in newsTags">
+		<div pull-refresh-android='contentLoader(newsTag)' is-loading='newsTag.isLoading'>
+			<div class="list-group news-list">
+				<a class="list-group-item" ng-repeat="news in newsTag.newsList | orderBy:'-createTime'"
+				   ng-click="readMore(news)">
+					<div class="img">
+						<img ali-src="news.imgNameList[0]"/>
+					</div>
+					<div class="title">
+						<h4 class="list-group-item-heading" ng-bind="news.title"></h4>
+
+						<p class="item-date" ng-bind="news.createTime | date:'yyyy-MM-dd HH:mm:ss'"></p>
+					</div>
+				</a>
+
+				<a class="list-group-item" style="text-align: center;" ng-click="showMore(newsTag)">
+					加载更多
+				</a>
+			</div>
+		</div>
+	</swipe-tab>
+</swipe-tabset>

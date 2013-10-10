@@ -1,0 +1,29 @@
+<div class="page-toolbar">
+
+	<span class="page-tool-btn" ng-click="toggleDrawerLeft()">
+		<i class="icon-reorder"></i>
+	</span>
+
+	<span class="page-tool-btn dock-tr" ng-click="showNotice()">
+		<i class="icon-bell-alt"></i>
+	</span>
+
+	<span class="page-heading" ng-bind="pageHeading">
+		智慧校园
+	</span>
+</div>
+<div class="page-content">
+
+	<div class="home">
+
+
+		<div ng-repeat="nav in navList" class="home-box" ng-class="nav.color"
+			 ng-click="switchPage(nav)">
+			<h2 ng-bind="nav.name"></h2>
+
+			<div class="home-box-icon">
+				<i ng-class="nav.icon"></i>
+			</div>
+		</div>
+	</div>
+</div>

@@ -34,12 +34,12 @@ Hammer.defaults = {
 };
 
 // detect touchevents
-Hammer.HAS_POINTEREVENTS = window.navigator.pointerEnabled || window.navigator.msPointerEnabled;
+Hammer.HAS_POINTEREVENTS = navigator.pointerEnabled || navigator.msPointerEnabled;
 Hammer.HAS_TOUCHEVENTS = ('ontouchstart' in window);
 
 // dont use mouseevents on mobile devices
-Hammer.MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android|silk/i;
-Hammer.NO_MOUSEEVENTS = Hammer.HAS_TOUCHEVENTS && window.navigator.userAgent.match(Hammer.MOBILE_REGEX);
+Hammer.MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android/i;
+Hammer.NO_MOUSEEVENTS = Hammer.HAS_TOUCHEVENTS && navigator.userAgent.match(Hammer.MOBILE_REGEX);
 
 // eventtypes per touchevent (start, move, end)
 // are filled by Hammer.event.determineEventTypes on setup
@@ -62,7 +62,7 @@ Hammer.EVENT_MOVE = 'move';
 Hammer.EVENT_END = 'end';
 
 // hammer document where the base events are added at
-Hammer.DOCUMENT = window.document;
+Hammer.DOCUMENT = document;
 
 // plugins namespace
 Hammer.plugins = {};
@@ -265,12 +265,6 @@ Hammer.event = {
                 enable_detect = true;
             }
 
-            // mouse isn't pressed
-            else if(sourceEventType.match(/mouse/) && ev.which !== 1) {
-                enable_detect = false;
-            }
-
-
             // we are in a touch event, set the touch triggered bool to true,
             // this for the conflicts that may occur on ios and android
             if(sourceEventType.match(/touch|pointer/)) {
@@ -306,13 +300,18 @@ Hammer.event = {
                     eventType = Hammer.EVENT_END;
                 }
 
+                // because touchend has no touches, and we often want to use these in our gestures,
+                // we send the last move event as our eventData in touchend
+                if(!count_touches && last_move_event !== null) {
+                    ev = last_move_event;
+                }
                 // store the last move event
-                if(count_touches || last_move_event === null) {
+                else {
                     last_move_event = ev;
                 }
 
                 // trigger the handler
-                handler.call(Hammer.detection, self.collectEventData(element, eventType, self.getTouchList(last_move_event, eventType), ev));
+                handler.call(Hammer.detection, self.collectEventData(element, eventType, ev));
 
                 // remove pointerevent from list
                 if(Hammer.HAS_POINTEREVENTS && eventType == Hammer.EVENT_END) {
@@ -383,8 +382,12 @@ Hammer.event = {
         }
         // make fake touchlist from mouse position
         else {
-            ev.indentifier = 1;
-            return [ev];
+            return [{
+                identifier: 1,
+                pageX: ev.pageX,
+                pageY: ev.pageY,
+                target: ev.target
+            }];
         }
     },
 
@@ -395,7 +398,8 @@ Hammer.event = {
      * @param   {String}        eventType        like Hammer.EVENT_MOVE
      * @param   {Object}        eventData
      */
-    collectEventData: function collectEventData(element, eventType, touches, ev) {
+    collectEventData: function collectEventData(element, eventType, ev) {
+        var touches = this.getTouchList(ev, eventType);
 
         // find out pointerType
         var pointerType = Hammer.POINTER_TOUCH;
@@ -688,7 +692,7 @@ Hammer.utils = {
      */
     stopDefaultBrowserBehavior: function stopDefaultBrowserBehavior(element, css_props) {
         var prop,
-            vendors = ['webkit','khtml','moz','Moz','ms','o',''];
+            vendors = ['webkit','khtml','moz','ms','o',''];
 
         if(!css_props || !element.style) {
             return;
@@ -719,7 +723,6 @@ Hammer.utils = {
         }
     }
 };
-
 Hammer.detection = {
     // contains all registred Hammer.gestures in the correct order
     gestures: [],
@@ -761,6 +764,7 @@ Hammer.detection = {
 
     /**
      * Hammer.gesture detection
+     * @param   {Object}    eventData
      * @param   {Object}    eventData
      */
     detect: function detect(eventData) {
@@ -846,24 +850,22 @@ Hammer.detection = {
             velocity = Hammer.utils.getVelocity(delta_time, delta_x, delta_y);
 
         Hammer.utils.extend(ev, {
-            deltaTime       : delta_time,
+            deltaTime   : delta_time,
 
-            deltaX          : delta_x,
-            deltaY          : delta_y,
+            deltaX      : delta_x,
+            deltaY      : delta_y,
 
-            velocityX       : velocity.x,
-            velocityY       : velocity.y,
+            velocityX   : velocity.x,
+            velocityY   : velocity.y,
 
-            distance        : Hammer.utils.getDistance(startEv.center, ev.center),
-            angle           : Hammer.utils.getAngle(startEv.center, ev.center),
-            interimAngle    : this.current.lastEvent && Hammer.utils.getAngle(this.current.lastEvent.center, ev.center),
-            direction       : Hammer.utils.getDirection(startEv.center, ev.center),
-            interimDirection: this.current.lastEvent && Hammer.utils.getDirection(this.current.lastEvent.center, ev.center),
+            distance    : Hammer.utils.getDistance(startEv.center, ev.center),
+            angle       : Hammer.utils.getAngle(startEv.center, ev.center),
+            direction   : Hammer.utils.getDirection(startEv.center, ev.center),
 
-            scale           : Hammer.utils.getScale(startEv.touches, ev.touches),
-            rotation        : Hammer.utils.getRotation(startEv.touches, ev.touches),
+            scale       : Hammer.utils.getScale(startEv.touches, ev.touches),
+            rotation    : Hammer.utils.getRotation(startEv.touches, ev.touches),
 
-            startEvent      : startEv
+            startEvent  : startEv
         });
 
         return ev;
@@ -1153,11 +1155,6 @@ Hammer.gestures.Drag = {
     index: 50,
     defaults: {
         drag_min_distance : 10,
-        // Set correct_for_drag_min_distance to true to make the starting point of the drag
-        // be calculated from where the drag was triggered, not from where the touch started.
-        // Useful to avoid a jerk-starting drag, which can make fine-adjustments
-        // through dragging difficult, and be visually unappealing.
-        correct_for_drag_min_distance : true,
         // set 0 for unlimited, but this can conflict with transform
         drag_max_touches  : 1,
         // prevent default browser behavior when dragging occurs
@@ -1202,20 +1199,7 @@ Hammer.gestures.Drag = {
                 }
 
                 // we are dragging!
-                if(Hammer.detection.current.name != this.name) {
-                    Hammer.detection.current.name = this.name;
-                    if (inst.options.correct_for_drag_min_distance) {
-                        // When a drag is triggered, set the event center to drag_min_distance pixels from the original event center.
-                        // Without this correction, the dragged distance would jumpstart at drag_min_distance pixels instead of at 0.
-                        // It might be useful to save the original start point somewhere
-                        var factor = Math.abs(inst.options.drag_min_distance/ev.distance);
-                        Hammer.detection.current.startEvent.center.pageX += ev.deltaX * factor;
-                        Hammer.detection.current.startEvent.center.pageY += ev.deltaY * factor;
-
-                        // recalculate event data using new start point
-                        ev = Hammer.detection.extendEventData(ev);
-                    }
-                }
+                Hammer.detection.current.name = this.name;
 
                 // lock drag to axis?
                 if(Hammer.detection.current.lastEvent.drag_locked_to_axis || (inst.options.drag_lock_to_axis && inst.options.drag_lock_min_distance<=ev.distance)) {
@@ -1447,9 +1431,11 @@ angular.injector(['ng']).invoke(['$rootScope', function ($rootScope) {
 
 var module = angular.module('utils.hammer', []);
 
+
 module.factory('Hammer', function () {
     return Hammer;
 });
+
 
 GESTURES.forEach(function (gesture, idx) {
     var hammerGesture = 'hammer' + gesture[0].toUpperCase() + gesture.slice(1);

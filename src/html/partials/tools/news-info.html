@@ -1,0 +1,16 @@
+<div class="page-toolbar">
+
+	<span class="page-tool-btn" ng-click="$navigate.back()">
+		<i class="icon-chevron-left"></i>
+	</span>
+</div>
+<div class="page-content">
+	<div loader-shelter="!isReady">
+		<div class="dock-fill scroll-y news-info">
+			<h2 ng-bind="newsInfo.title"></h2>
+
+			<div ng-bind-html-unsafe="newsInfo.content"></div>
+		</div>
+
+	</div>
+</div>

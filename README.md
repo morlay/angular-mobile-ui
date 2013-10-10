@@ -30,10 +30,11 @@ after all envi installed, you can use CLI for task
 
 1. `$ npm install` and `$ bower install` for base libs (must first).
 2. `$ grunt package` for package all statics to the dist for web.
-3. `$ grunt package-to-app` for package all statics to the dist for phonegap app.
-3. `$ grunt prepare` for that copy base files to the dist.
-3. `$ grunt` for local host at 127.0.0.1:80
-3. `$ grunt watch` for that when you modify the file in src, task will run itself to refresh the statics for showing new.
+3. `$ grunt app-init` for create phonegap 3.0+ path.
+4. `$ grunt package-to-app` for package all statics to the dist for phonegap app. (step.3 must be first)
+5. `$ grunt prepare` for that copy base files to the dist.
+6. `$ grunt` for local host at 127.0.0.1:80
+7. `$ grunt watch` for that when you modify the file in src, task will run itself to refresh the statics for showing new.
 
 
 

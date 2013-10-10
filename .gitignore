@@ -57,5 +57,7 @@ bower_components/
 # develop files
 
 bower_components/
+
 build/
+
 dist/

@@ -21,7 +21,7 @@ module.exports = function (grunt) {
         }, endInit: {
             web: 'angular.bootstrap(window.document, ["<%= pkg.shortName %>"]);',
             phoneGap: 'document.addEventListener("deviceready", function () {<%= endInit.web %>});',
-            phoneGapSrc: '<script src="cordova.js"></script><script src="cordova_plugins.js"></script>'
+            phoneGapSrc: '<script src="cordova.js"></script>'
         }
     });
 
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
 
     grunt.loadTasks('./grunt/package');
     grunt.registerTask('package', ['prepare', 'dev-build', 'script-uglify', 'dev-to-dist']);
-    grunt.registerTask('package-to-app', ['build-android', 'package', 'app-build']);
+    grunt.registerTask('package-to-app', ['build-android', 'prepare', 'dev-build', 'dev-to-dist', 'app-build']);
 
     return grunt
 };

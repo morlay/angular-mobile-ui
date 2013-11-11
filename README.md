@@ -6,7 +6,7 @@ UI Kits for PhoneGap or Mobile Web App
 
 * install [grunt](http://gruntjs.com/) `$ npm install -g grunt-cli`
 * install [bower](http://bower.io) `$ npm install -g bower` (must have the git envi)
-* install [cordova](http://cordova.apache.org/) `$ npm install -g cordora`
+* install [cordova](http://cordova.apache.org/) `$ npm install -g cordova`
 
 
 ## Base Libs & Styles

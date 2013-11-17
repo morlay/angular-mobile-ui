@@ -1,0 +1,153 @@
+.action-bar {
+
+  .clearfix();
+
+  &-nav-icon {
+
+    .canBeClicked();
+
+    float: left;
+    line-height: @action-bar-height;
+    height: @action-bar-height;
+    font-size: @action-bar-height/2;
+    padding: 0;
+
+    overflow: hidden;
+
+    & > .flatter {
+      float: left;
+      overflow: hidden;
+      width: 12px;
+      .transition(0.2s);
+      &.active {
+        .translate3d(-6px, 0, 0);
+      }
+    }
+
+    & > .main-icon {
+      float: left;
+      overflow: hidden;
+      padding: 0 7px;
+    }
+
+    &.ng-click-active {
+      background: darken(@action-bar-bg-color, 7%);
+    }
+
+  }
+  &-view-nav {
+    float: left;
+    line-height: @action-bar-height;
+    height: @action-bar-height;
+    position: relative;
+    font-size: 18px;
+
+    & > .withList {
+      position: relative;
+      padding: 0 14px 0 7px;
+
+      &.ng-click-active {
+        background: darken(@action-bar-bg-color, 7%);
+      }
+
+      .canBeClicked();
+
+      &:after {
+        content: '';
+        position: absolute;
+        left: auto;
+        top: auto;
+        right: 7px;
+        bottom: 7px;
+        z-index: 1;
+
+        border-bottom: 7px solid @action-bar-color;
+        border-left: 7px solid transparent;
+
+      }
+    }
+
+  }
+
+  &-tool-btn {
+    .canBeClicked();
+    float: right;
+    width: @action-bar-height;
+    text-align: center;
+    line-height: @action-bar-height;
+    height: @action-bar-height;
+    font-size: @action-bar-height/2;
+    padding: 0;
+    &.ng-click-active {
+      background: darken(@action-bar-bg-color, 7%);
+    }
+  }
+
+  &-view-list {
+
+    &-bg {
+      .dock-fill();
+      z-index: 500;
+
+      &.ng-enter,
+      &.ng-leave {
+        .transition(0.1s);
+      }
+
+      &.ng-enter,
+      &.ng-leave.ng-leave-active {
+
+        .action-bar-view-list {
+          .scale(0.5);
+          opacity: 0;
+        }
+      }
+
+      &.ng-leave,
+      &.ng-enter.ng-enter-active {
+        .action-bar-view-list {
+          .scale(1);
+          opacity: 1;
+        }
+      }
+
+    }
+    .transition(0.1s);
+    .translate3d(0, 0, 0);
+    opacity: 1;
+
+
+    position: absolute;
+    background: white;
+    padding: 0;
+    list-style-type: none;
+
+    top: @action-bar-height - 3px;
+    left: 12%;
+    right: 12%;
+
+    max-height: 80%;
+
+    border: 1px solid @gray-lighter;
+
+    box-shadow: 0 0 7px fadeout(black, 65%);
+
+    overflow-y: auto;
+
+    &-item {
+
+      .canBeClicked();
+      color: @gray;
+      font-size: 16px;
+      padding: 12px 15px;
+      border-bottom: 1px solid @gray-lighter;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+}
+
+

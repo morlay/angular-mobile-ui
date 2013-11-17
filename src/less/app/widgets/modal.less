@@ -1,0 +1,22 @@
+.full-modal {
+  .dock-fill();
+  background: white;
+  border-top: 1px solid @gray-lighter;
+
+  z-index: 50;
+
+  &.ng-enter,
+  &.ng-leave {
+    .transition(0.2s);
+  }
+
+  &.ng-enter,
+  &.ng-leave.ng-leave-active {
+    .translate3d(0, 100%, 0);
+  }
+
+  &.ng-leave,
+  &.ng-enter.ng-enter-active {
+    .translate3d(0, 0, 0);
+  }
+}

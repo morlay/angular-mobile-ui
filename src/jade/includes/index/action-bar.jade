@@ -1,0 +1,12 @@
+div.action-bar
+    div.action-bar-nav-icon(ng-click="isShowNavDrawer = !isShowNavDrawer;")
+        span.flatter(ng-class="{active:isShowNavDrawer}")
+            i.fa.fa-bars
+        span.main-icon
+            i(class="{{actionBar.icon}}")
+    div.action-bar-view-nav(ng-switch="actionBar.viewList.length",ng-if="actionBar.viewList.length > 0")
+        span.title(ng-switch-when="1",ng-bind="actionBar.viewList[actionBar.curViewIndex].name")
+        div.withList(ng-switch-default,ng-click="actionBar.isShowViewList = true;")
+            span.title(ng-bind="actionBar.viewList[actionBar.curViewIndex].name")
+    div.action-bar-tool-btn(ng-repeat="btn in actionBar.btns",ng-click="btn.actionFoo()")
+        i(class="{{btn.icon}}")

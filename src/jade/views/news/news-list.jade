@@ -1,0 +1,34 @@
+div.news-list
+    div.list-group
+        a.list-group-item(
+        ng-href="#/news/category/{{actionBar.curViewIndex + 1}}/post/{{news.newsId}}",
+        ng-repeat="news in newsTags[actionBar.curViewIndex].newsList | orderBy:'-createTime'")
+
+            div.img
+                img(ali-src="news.imgNameList[0]")
+            div.title
+                h4.list-group-item-heading(ng-bind="news.title")
+                p.item-date(ng-bind="news.createTime | date:'yyyy-MM-dd HH:mm:ss'")
+
+        a.list-group-item(ng-click="showMore(newsTags[actionBar.curViewIndex])")
+            p.text-center
+                i(class="{{actionBar.btns[0].icon}}")
+                span 点击加载更多
+
+
+div.full-modal.news-category-list(ng-if="isShowCategoryList")
+    lable.search-area
+        input.search-input(type="text",ng-model="categoryListFilterString",ng-focus="isShowClearBtn = true;")
+            span.search-btn(ng-hide="isShowClearBtn")
+                i.fa.fa-search
+            span.clear-btn(ng-show="isShowClearBtn",ng-click="categoryListFilterString = '';isShowClearBtn = false;")
+                i.fa.fa-times
+
+    div.list-group
+        div.list-group-item(
+        ng-repeat="tag in newsTags | filter:categoryListFilterString",
+        ng-class="{'hasFocus':tag.hasFocus}",
+        ng-click="updateFocusState(tag)")
+            span(ng-bind="tag.name")
+            span.pull-right
+                i.fa(ng-class="tag.hasFocus?'fa-minus-circle':'fa-plus-circle';")

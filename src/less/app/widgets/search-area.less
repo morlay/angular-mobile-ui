@@ -1,0 +1,43 @@
+@search-area-height: 36px;
+
+.search-area {
+  display: block;
+  position: relative;
+
+  border-bottom: 2px solid @brand-info;
+  height: calc(@search-area-height + 3px);
+  color: @gray-light;
+
+  z-index: 0;
+
+  .clearfix();
+
+  .search-btn,
+  .clear-btn {
+    width: @search-area-height;
+    height: @search-area-height;
+    line-height: @search-area-height;
+    text-align: center;
+    font-size: 20px;
+    z-index: 2;
+    .dock-tl();
+  }
+  .clear-btn {
+    .canBeClicked();
+  }
+
+  .search-input {
+    .dock-fill();
+    line-height: @search-area-height;
+
+    outline: none;
+    height: @search-area-height;
+    color: @gray;
+
+    background: transparent;
+    border: none;
+    padding: 0 @search-area-height;
+    margin: 0;
+    z-index: 1;
+  }
+}

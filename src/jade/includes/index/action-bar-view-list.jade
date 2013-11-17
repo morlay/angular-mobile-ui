@@ -1,0 +1,4 @@
+div.action-bar-view-list-bg(ng-if="actionBar.isShowViewList",ng-click="actionBar.isShowViewList = false;")
+    ul.action-bar-view-list
+        li.action-bar-view-list-item(ng-repeat="view in actionBar.viewList",ng-click="view.actionFoo()")
+            span(ng-bind="view.name")

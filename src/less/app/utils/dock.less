@@ -1,0 +1,130 @@
+// 停靠、绝对定位、
+// 适用于浏览器全屏应用
+// 九宫位
+
+.dock-tl() {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.dock-tc() {
+  position: absolute;
+  margin: 0 auto;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.dock-tr() {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.dock-cl() {
+  position: absolute;
+  margin: auto 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.dock-cc() {
+  position: absolute;
+  margin: auto auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.dock-cr() {
+  position: absolute;
+  margin: auto 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.dock-bl() {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.dock-bc() {
+  position: absolute;
+  margin: 0 auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.dock-br() {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.dock-fill() {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.dock-fill {
+  .dock-fill();
+}
+
+.dock-top-left,
+.dock-tl {
+  .dock-tl();
+}
+
+.dock-top-center,
+.dock-tc {
+  .dock-tc();
+}
+
+.dock-top-right,
+.dock-tr {
+  .dock-tr();
+}
+
+.dock-center-left,
+.dock-cl {
+  .dock-cl();
+}
+
+.dock-center-center,
+.dock-cc {
+  .dock-cc();
+}
+
+.dock-center-right,
+.dock-cr {
+  .dock-cr();
+}
+
+.dock-bottom-left,
+.dock-bl {
+  .dock-bl();
+}
+
+.dock-bottom-center,
+.dock-bc {
+  .dock-bc();
+}
+
+.dock-bottom-right,
+.dock-br {
+  .dock-br();
+}
+
+.scroll-y {
+  overflow-x: hidden;
+  overflow-y: auto;
+}

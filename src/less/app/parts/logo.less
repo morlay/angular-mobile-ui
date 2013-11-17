@@ -1,0 +1,50 @@
+.logo-page {
+  .dock-fill();
+  z-index: 500;
+  #gradient > .vertical-three-colors(#0184cf; #12a6fb; 35%; #0068bf);
+
+  &.ng-leave {
+    .transition(0.2s);
+    .translate3d(0, 0, 0);
+  }
+
+  &.ng-leave.ng-leave-active {
+    .translate3d(-100%, 0, 0);
+  }
+
+}
+
+.logo-page-content {
+
+  text-align: center;
+  top: 50%;
+  margin-top: 80px;
+
+  .logo {
+    max-width: 30%;
+  }
+  .logo-text {
+    max-width: 80%;
+  }
+  p {
+    margin-bottom: 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+  }
+}
+
+.logo-page-footer {
+  .logo-bg {
+    width: 100%;
+    opacity: 0.4;
+  }
+
+  text-align: center;
+  .dock-bl();
+  right: 0;
+  padding: 20px 0;
+  color: white;
+}
+
+

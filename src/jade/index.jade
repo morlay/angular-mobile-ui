@@ -1,0 +1,9 @@
+extends ./layouts/layout-index.jade
+block content
+    body.android-layouts(ng-controller="MainCtrl")
+
+        include ./includes/index/action-bar.jade
+        ng-view.content-area
+        include ./includes/index/action-bar-view-list.jade
+        include ./includes/index/nav-drawer.jade
+        include ./includes/index/logo-page.jade

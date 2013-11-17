@@ -1,0 +1,130 @@
+.home-nav {
+
+  position: absolute;
+
+  top: 10px;
+  left: 50%;
+  .translate3d(-50%, 0, 0);
+
+  display: inline-block;
+  z-index: 50;
+}
+
+.home-nav-item {
+  position: relative;
+  display: inline-block;
+  width: 17px;
+  height: 4px;
+  margin: 3px;
+  background: @gray-light;
+  .transition(0.5s);
+
+  &.active {
+    background: @brand-info;
+  }
+}
+
+.home-box {
+
+  .canBeClicked();
+
+  position: relative;
+  text-align: center;
+
+  border-radius: 7px;
+
+  // 自适应 正方形
+  width: 80%;
+  padding-bottom: 80%;
+  line-height: 0;
+
+  margin: 20px auto;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border: 1px solid @gray-lighter;
+    background: white;
+    z-index: -1;
+    border-radius: 10px;
+    overflow: hidden;
+
+  }
+
+  h2 {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: 0 0 -30px 0;
+    color: #666;
+    width: 100%;
+    font-size: 14px;
+    font-weight: normal;
+    word-break: break-all;
+
+  }
+
+  &.color-1 {
+    &.ng-click-active {
+      background: darken(#AAE690,7%);
+    }
+    background: #AAE690;
+    box-shadow: inset 0 0 7px darken(#AAE690, 30%);
+  }
+  &.color-2 {
+    &.ng-click-active {
+      background: darken(#A1A4F3,7%);
+    }
+    background: #A1A4F3;
+    box-shadow: inset 0 0 7px darken(#A1A4F3, 30%);
+  }
+  &.color-3 {
+    &.ng-click-active {
+      background: darken(#F0B593,7%);
+    }
+    background: #F0B593;
+    box-shadow: inset 0 0 7px darken(#F0B593, 30%);
+  }
+  &.color-4 {
+    &.ng-click-active {
+      background: darken(#F4E9B3,7%);
+    }
+    background: #F4E9B3;
+    box-shadow: inset 0 0 7px darken(#F4E9B3, 30%);
+  }
+  &.color-5 {
+    &.ng-click-active {
+      background: darken(#F19393,7%);
+    }
+    background: #F19393;
+    box-shadow: inset 0 0 7px darken(#F19393, 30%);
+  }
+  &.color-6 {
+    &.ng-click-active {
+      background: darken(#94DDF0,7%);
+    }
+    background: #94DDF0;
+    box-shadow: inset 0 0 7px darken(#94DDF0, 30%);
+  }
+  &.color-0 {
+    &.ng-click-active {
+      background: darken(#C892F0,7%);
+    }
+    background: #C892F0;
+    box-shadow: inset 0 0 7px darken(#C892F0, 30%);
+  }
+}
+
+.home-box-icon {
+  .dock-cc();
+
+  color: white;
+  font-size: 50px;
+  line-height: 50px;
+
+  height: 50px;
+}

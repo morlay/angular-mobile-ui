@@ -1,0 +1,87 @@
+.nav-drawer {
+
+  position: absolute;
+  top: @action-bar-height;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 50;
+
+  &-bg {
+    .dock-fill();
+    background: #000000;
+
+    .transition(0.15s);
+
+    opacity: 0.3;
+  }
+
+  &-list {
+    .dock-tl();
+    bottom: 0;
+    width: 2/3*100%;
+    border-right: 1px solid @gray-lighter;
+    background: white;
+    .transition(0.2s);
+    .translate3d(0, 0, 0);
+  }
+
+  &.ng-enter,
+  &.ng-leave {
+    .transition(0.2s);
+  }
+
+  &.ng-enter,
+  &.ng-leave.ng-leave-active {
+
+    .nav-drawer-list {
+      .translate3d(-100%, 0, 0);
+    }
+    .nav-drawer-bg {
+      opacity: 0;
+    }
+
+  }
+
+  &.ng-leave,
+  &.ng-enter.ng-enter-active {
+    .nav-drawer-list {
+      .translate3d(0, 0, 0);
+    }
+    .nav-drawer-bg {
+      opacity: 0.3;
+    }
+  }
+
+}
+
+.nav-drawer-list-item {
+
+  .canBeClicked();
+
+  line-height: @action-bar-height;
+  height: @action-bar-height;
+
+  border-bottom: 1px solid @gray-lighter;
+
+  color: @gray-light;
+
+  &.active {
+    background: @brand-info;
+    color: white;
+  }
+}
+
+.nav-drawer-list-item-icon {
+
+
+  float: left;
+  text-align: center;
+  margin: 0 15px;
+  font-size: 24px;
+}
+
+.nav-drawer-list-item-title {
+
+}

@@ -1,0 +1,69 @@
+@action-bar-bg-color: @brand-primary;
+@action-bar-color: white;
+
+@action-bar-height: 48px;
+
+// 取消文字选择背景
+::selection {
+  background: transparent;
+}
+
+.android-layouts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background: #000000;
+
+  overflow: hidden;
+  z-index: 0;
+
+}
+
+.action-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: @action-bar-height;
+
+  color: @action-bar-color;
+  background-color: @action-bar-bg-color;
+  border-bottom: 2px solid lighten(@action-bar-bg-color, 7%);
+
+  z-index: 100;
+}
+
+.content-area {
+  position: absolute;
+  top: @action-bar-height;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: @gray-lighter;
+
+  overflow: hidden;
+  z-index: 10;
+
+//  &.ng-enter,
+//  &.ng-leave {
+//    .transition(0.2s);
+//    -webkit-transform-style: preserve-3d;
+//  }
+//
+//  &.ng-enter {
+//    .translate3d(100%, 0, 0);
+//  }
+//  &.ng-leave,
+//  &.ng-enter.ng-enter-active {
+//    .translate3d(0, 0, 0);
+//
+//  }
+//
+//  &.ng-leave.ng-leave-active {
+//    .translate3d(-100%, 0, 0);
+//  }
+}

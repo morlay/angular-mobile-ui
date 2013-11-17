@@ -1,0 +1,7 @@
+div.nav-drawer(ng-if="isShowNavDrawer",ng-swipe-left="hideNavDrawer()")
+    div.nav-drawer-bg(ng-click="hideNavDrawer()")
+    div.nav-drawer-list
+        div.nav-drawer-list-item(ng-repeat="item in navDrawerList",ng-class="{active:item.active}",ng-click="switchPage(item)")
+            span.nav-drawer-list-item-icon
+                i(ng-class="item.icon")
+            span.nav-drawer-list-item-title(ng-bind="item.name")

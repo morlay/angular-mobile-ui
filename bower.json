@@ -1,0 +1,21 @@
+{
+    "name": "hello-angular",
+    "dependencies": {
+        "angular": "~1.2.0",
+        "angular-route": "~1.2.0",
+        "angular-resource": "~1.2.0",
+        "angular-cookies": "~1.2.0",
+        "angular-sanitize": "~1.2.0",
+        "angular-animate": "~1.2.0",
+        "angular-loader": "~1.2.0",
+        "angular-touch": "~1.2.0",
+
+        "bootstrap": "https://github.com/twbs/bootstrap/archive/v3.0.2.zip",
+        "font-awesome": "*",
+        "xdate": "https://github.com/arshaw/xdate/archive/v0.8.zip"
+    },
+    "devDependencies": {
+        "angular-mocks": "~1.2.0",
+        "angular-scenario": "~1.2.0"
+    }
+}

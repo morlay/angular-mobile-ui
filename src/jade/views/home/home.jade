@@ -1,0 +1,12 @@
+div.dock-fill.bg-paper
+    div.home-nav
+        div.home-nav-item(ng-class="{active:pane.active}",ng-repeat="pane in panesArr")
+
+    swipe-tabset(panes-scope="panesArr",style="top: 27px")
+        swipe-tab(ng-repeat="navArr in navList")
+            grid-cell-set(col="3",row="3")
+                grid-cell(ng-repeat="nav in navArr")
+                    div.home-box(ng-class="nav.color",ng-click="switchPage(nav)")
+                        h2(ng-bind="nav.name")
+                        div.home-box-icon
+                            i(ng-class="nav.icon")

@@ -1,0 +1,8 @@
+div.list-group.notice-list
+    a.list-group-item(ng-repeat="notice in noticeList",ng-click="showMoreNotice()")
+        span.badge 14
+        h4.list-group-item-heading
+            span(ng-bind="notice.from")
+            span -
+            span(ng-bind="notice.title")
+        p.list-group-item-text(ng-bind="notice.content")

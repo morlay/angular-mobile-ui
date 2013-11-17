@@ -1,0 +1,4 @@
+div
+    div.smooth-scroller-icon.icon(ng-class="{'loading':isLoading}")
+        span(ng-hide="isPulling") {{isLoading?'正在加载 …':'加载完成' }}
+        span(ng-show="isPullingEnough") 施放以加载

@@ -1,0 +1,27 @@
+{
+    "name": "hello-angular",
+    "shortName": "ha",
+    "version": "0.0.1",
+    "organization": "org.tla42",
+    "private": true,
+    "dependencies": {
+
+    },
+    "devDependencies": {
+        "grunt": "*",
+
+        "grunt-contrib-jade": "*",
+        "grunt-contrib-less": "*",
+
+        "grunt-contrib-concat": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-connect": "*",
+        "grunt-contrib-watch": "*",
+        "grunt-contrib-copy": "*",
+        "grunt-contrib-clean": "*",
+
+        "grunt-html2js": "*",
+
+        "shelljs": "*"
+    }
+}

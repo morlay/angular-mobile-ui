@@ -20,10 +20,6 @@ module.exports = function (grunt) {
             shell.echo('Error: cordova platform add android failed');
             shell.exit(1);
         }
-
-        // backup config.xml
-
-
     });
 
     grunt.registerTask('cordova.add.plugins', 'cordova.add.plugins', function () {

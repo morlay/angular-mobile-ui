@@ -1,18 +1,19 @@
 angular.module("app/news/main", [
-        "app/news/newsInfo"
+        "app/news/newsInfo",
+        "app/news/dataPool"
     ])
     .config([
         '$routeProvider',
         function ($routeProvider) {
             $routeProvider.when('/news/category/:categoryId', {
                 name: "新闻会议",
-                defaultPath: '/news/category/1',
+                defaultPath: '/news/category/0',
                 templateUrl: "views/news/news-list.html",
                 controller: 'NewsListCtrl',
                 parentPage: 'home',
                 icon: 'fa fa-list-alt'
             });
-            $routeProvider.when('/news/category/:categoryId/post/:newsId', {
+            $routeProvider.when('/news/category/:categoryId/post/:postId', {
                 name: "新闻详情",
                 templateUrl: "views/news/news-info.html",
                 controller: 'NewsInfoCtrl',
@@ -24,22 +25,24 @@ angular.module("app/news/main", [
         , '$location'
         , '$routeParams'
         , '$window'
-        , function ($scope, $location, $routeParams, $window) {
-
-            $scope.newsTags = [
-                {id: 1, name: '学校要闻', newsList: [ ], offset: 0, hasFocus: true},
-                {id: 2, name: '综合新闻', newsList: [ ], offset: 0, hasFocus: true},
-                {id: 3, name: '会议讲座', newsList: [ ], offset: 0, hasFocus: false}
-            ];
-
+        , 'news.dataPool'
+        , function ($scope, $location, $routeParams, $window, dataPool) {
 
             $scope.contentLoader = function (newTag) {
                 newTag.offset = 1;
-                $scope.$emit('getNewsList', {newTag: newTag});
+                dataPool.newsList.get({categoryId: newTag.id}, function (u, getResponseHeaders) {
+                    console.log(u);
+                    $scope.newsTags[newTag.id].newsList = u.newsPosts;
+
+                    $scope.$emit('updateNewsList', {isReady: true});
+                });
             };
 
             $scope.$watch('actionBar.curViewIndex', function (value) {
+
+                console.log('actionBar.curViewIndex',value);
                 $scope.actionBar.btns[0].actionFoo();
+
             });
 
             $scope.showMore = function (newTag) {
@@ -69,7 +72,10 @@ angular.module("app/news/main", [
                         icon: 'fa fa-spinner fa-spin',
                         actionFoo: function () {
                             this.icon = 'fa fa-spinner fa-spin';
-                            $scope.contentLoader($scope.newsTags[$scope.actionBar.curViewIndex]);
+                            if (dataPool.newsTags.length > 0) {
+                                $scope.contentLoader($scope.newsTags[$scope.actionBar.curViewIndex]);
+                            }
+
                         },
                         resetFoo: function () {
                             this.icon = 'fa fa-refresh';
@@ -106,9 +112,34 @@ angular.module("app/news/main", [
                 });
             }
 
-            updateViewList();
 
-            $scope.actionBar.curViewIndex = parseInt($routeParams.categoryId) - 1;
+            console.log(dataPool.newsTags.length)
+
+            if (dataPool.newsTags.length === 0) {
+
+                dataPool.categoryList.get(null, function (u, getResponseHeaders) {
+                    $window.angular.forEach(u.newsTags, function (newsTag) {
+                        newsTag.newsList = [];
+                        newsTag.offset = 0;
+                        newsTag.hasFocus = true;
+                        dataPool.newsTags.push(newsTag);
+                    });
+
+                    $scope.newsTags = dataPool.newsTags;
+
+                    console.log($scope.newsTags);
+                    updateViewList();
+                    $scope.actionBar.curViewIndex = parseInt($routeParams.categoryId);
+                    $scope.actionBar.btns[0].actionFoo();
+                });
+
+
+            } else {
+                $scope.newsTags = dataPool.newsTags;
+                updateViewList();
+                $scope.actionBar.curViewIndex = parseInt($routeParams.categoryId);
+            }
+
 
             $scope.$emit('refreshActionBar', $scope.actionBar);
 

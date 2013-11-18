@@ -1,14 +1,24 @@
 angular.module("app/news/newsInfo", [
-        'ngSanitize'
+        "app/news/dataPool"
     ]).controller('NewsInfoCtrl', [
         '$scope'
         , '$rootScope'
         , '$routeParams'
         , '$window'
-        , function ($scope, $rootScope, $routeParams, $window) {
+        , 'news.dataPool'
+        , function ($scope, $rootScope, $routeParams, $window, dataPool) {
 
             $scope.contentLoader = function () {
-                $scope.$emit('getNewsInfo', {news: $routeParams});
+
+
+                console.log($routeParams)
+
+                dataPool.newsPost.get($routeParams, function (u, getResponseHeaders) {
+                    console.log(u);
+                    $scope.newsInfo = u.post;
+                    $scope.$emit('updateNewsList', {isReady: true});
+                });
+
             };
 
 

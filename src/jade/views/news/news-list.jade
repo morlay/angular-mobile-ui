@@ -1,11 +1,10 @@
 div.news-list
     div.list-group
         a.list-group-item(
-        ng-href="#/news/category/{{actionBar.curViewIndex + 1}}/post/{{news.newsId}}",
+        ng-href="#/news/category/{{actionBar.curViewIndex}}/post/{{news.id}}",
         ng-repeat="news in newsTags[actionBar.curViewIndex].newsList | orderBy:'-createTime'")
-
             div.img
-                img(ali-src="news.imgNameList[0]")
+                img(ng-src="{{news.imgUrl}}")
             div.title
                 h4.list-group-item-heading(ng-bind="news.title")
                 p.item-date(ng-bind="news.createTime | date:'yyyy-MM-dd HH:mm:ss'")

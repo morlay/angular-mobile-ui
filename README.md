@@ -7,7 +7,7 @@ UI Kits for PhoneGap or Mobile Web App
 * install [grunt](http://gruntjs.com/) `$ npm install -g grunt-cli`
 * install [bower](http://bower.io) `$ npm install -g bower` (must have the git envi)
 
-* install [cordova](http://cordova.apache.org/) `$ npm install -g cordora`
+* install [cordova](http://cordova.apache.org/) `$ npm install -g cordova`
 
 
 ## Base Libs & Styles
@@ -32,7 +32,7 @@ after all envi installed, you can use CLI for task
 4. `$ grunt cordova.add.plugins` for add plugins by misc/cordova/plugins.json.
 5. `$ grunt package.cordova` for package all statics to the dist for phonegap app. (step.3 must be first)
 6. `$ grunt prepare` for that copy base files to the dist.
-7. `$ grunt` for local host at 127.0.0.1:80
+7. `$ grunt` for local host at 127.0.0.1:80 （if modify grunt/task.js to make default with the server.mode, it will host at 127.0.0.1:3000 by express.js）
 8. `$ grunt watch` for that when you modify the file in src, task will run itself to refresh the statics for showing new.
 
 

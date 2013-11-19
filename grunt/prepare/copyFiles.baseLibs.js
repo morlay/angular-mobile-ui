@@ -14,6 +14,24 @@ module.exports = function (grunt) {
             ]
         });
         grunt.task.run(['copy:baseLibs']);
+
+
+        function convertAngularTranslate() {
+
+            var fromFilePath = [grunt.config('bower'), 'angular-translate', 'angular-translate.js'].join('/');
+            var toFilePath = [grunt.config('src'), 'js', 'libs', 'translate.js'].join('/');
+
+            var contents = grunt.file.read(fromFilePath).replace(/pascalprecht\.translate/g, 'libs\/translate');
+
+
+            grunt.file.write(toFilePath, contents);
+        }
+
+        console.log('Convert Angular Translate');
+        convertAngularTranslate();
+
     });
+
+
     return grunt;
 };

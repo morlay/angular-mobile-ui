@@ -57,6 +57,7 @@ module.exports = function (grunt) {
 
         if (name.substring(0, 2) === "ng") {
             var ngName = name.toLowerCase().slice(2, name.length);
+
             filePath = [ grunt.config('bower'), "angular-" + ngName , "angular-" + ngName + ".js"].join("/");
 
             isHasDeps = false;

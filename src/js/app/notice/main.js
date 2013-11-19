@@ -1,4 +1,6 @@
-angular.module("app/notice/main", [    ])
+angular.module("app/notice/main", [
+        'libs/translate'
+    ])
     .config([
         '$routeProvider',
         function ($routeProvider) {

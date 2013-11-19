@@ -10,6 +10,8 @@
         "angular-loader": "~1.2.0",
         "angular-touch": "~1.2.0",
 
+        "angular-translate": "*",
+
         "bootstrap": "https://github.com/twbs/bootstrap/archive/v3.0.2.zip",
         "font-awesome": "*",
         "xdate": "https://github.com/arshaw/xdate/archive/v0.8.zip"

@@ -5,8 +5,8 @@ angular.module('ui/container/swipe-tabs', [
         'tpls/swipe-tabs/swipe-tabset'
     ])
     .controller('SwipeTabsetController', [
-        '$scope'
-        , function ($scope) {
+        '$scope',
+        function ($scope) {
 
 
             var self = this,
@@ -26,12 +26,24 @@ angular.module('ui/container/swipe-tabs', [
                 }
             };
 
-        }])
+            this.removeTab = function removeTab(tab) {
+                var index = panes.indexOf(tab);
+                //Select a new tab if the tab to be removed is selected
+                if (tab.active && panes.length > 1) {
+                    //If this is the last tab, select the previous tab. else, the next tab.
+                    var newActiveIndex = index == panes.length - 1 ? index - 1 : index + 1;
+                    this.selectPane(panes[newActiveIndex]);
+                }
+                panes.splice(index, 1);
+            };
+
+        }
+    ])
     .directive('swipeTabset', [
-        '$window'
-        , '$swipe'
-        , '$transformer'
-        , function ($window, $swipe, $transformer) {
+        '$window',
+        '$swipe',
+        '$transformer',
+        function ($window, $swipe, $transformer) {
             return {
                 restrict: 'EA',
                 transclude: true,
@@ -54,7 +66,11 @@ angular.module('ui/container/swipe-tabs', [
 
 
                         ctrl.$scope = scope;
+
+
                         scope.panesScope = scope.panes;
+
+
                         ctrl.$transcludeFn = transclude;
 
                         scope.paneWidth = elm[0].offsetWidth;
@@ -77,7 +93,7 @@ angular.module('ui/container/swipe-tabs', [
 
 
                         function bounceTime(howMuchOut) {
-                            return  $window.Math.abs(howMuchOut) * 1.5 + 200;
+                            return $window.Math.abs(howMuchOut) * 1.5 + 200;
                         }
 
 
@@ -85,7 +101,9 @@ angular.module('ui/container/swipe-tabs', [
 
                         scope.showPane = function (index) {
                             currentPane = index;
-                            transformer.easeTo({x: -scope.paneWidth * currentPane}, bounceTime(scope.paneWidth / 2));
+                            transformer.easeTo({
+                                x: -scope.paneWidth * currentPane
+                            }, bounceTime(scope.paneWidth / 2));
                         };
                         scope.changePaneTo = function (index) {
                             currentPane = $window.Math.max(0, $window.Math.min(index, scope.panes.length - 1));
@@ -123,14 +141,16 @@ angular.module('ui/container/swipe-tabs', [
                                 if (outOfBounds(newPos)) {
                                     newPos = startPosX + floor(deltaX * 0.3);
                                 }
-                                transformer.setTo({x: newPos});
+                                transformer.setTo({
+                                    x: newPos
+                                });
                             },
                             'end': function (coords) {
                                 deltaX = coords.x - startCoords.x;
                                 deltaTime = (Date.now()) - startedAt;
 
 
-                                if (Math.abs(deltaX) > scope.paneWidth * 0.4 || deltaTime < 200) {
+                                if (Math.abs(deltaX) > scope.paneWidth * 0.4 || (Math.abs(deltaX) > 10 && deltaTime < 200)) {
                                     if (deltaX < 0) {
                                         scope.changePaneTo(currentPane + 1);
                                     } else {
@@ -147,9 +167,11 @@ angular.module('ui/container/swipe-tabs', [
                     };
                 }
             };
-        }])
+        }
+    ])
 
-    .directive('swipeTab', ['$parse',
+    .directive('swipeTab', [
+        '$parse',
         function ($parse) {
             return {
                 require: '^swipeTabset',
@@ -159,7 +181,6 @@ angular.module('ui/container/swipe-tabs', [
                 transclude: true,
                 controller: function () {
                     //Empty controller so other directives can require being 'under' a tab
-
                 },
                 link: function (scope, iElement, iAttrs, ctrl) {
                     scope.ctrlScope = ctrl.$scope;
@@ -179,12 +200,18 @@ angular.module('ui/container/swipe-tabs', [
                     scope.$watch('active', function (active) {
                         setActive(scope.$parent, active);
                         if (active) {
-                            console.log(active);
                             ctrl.$scope.showPane(ctrl.$scope.panes.indexOf(scope));
                         }
                     });
 
                     ctrl.addPane(scope);
+
+
+                    scope.$on('$destroy', function () {
+                        ctrl.removeTab(scope);
+                    });
+
                 }
             };
-        }]);
+        }
+    ]);

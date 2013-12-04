@@ -32,7 +32,7 @@ module.exports = function (grunt) {
                         if (deps.indexOf(depName) < 0) {
                             deps.push(depName);
                             // Get dependencies for this new dependency
-                            deps = deps.concat(dependenciesForModule(depName));
+//                            deps = deps.concat(dependenciesForModule(depName));
                         }
                     }
                 });
@@ -100,6 +100,10 @@ module.exports = function (grunt) {
         });
 
         console.log(modules);
+
+        //        console.log('modules',modules);
+        grunt.file.write(grunt.config('build') + '/ng.json', JSON.stringify(modules));
+
 
         grunt.config('concat.dist', {
             options: {

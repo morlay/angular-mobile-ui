@@ -13,7 +13,22 @@ module.exports = function (grunt) {
                 }
             ]
         });
-        grunt.task.run(['copy:baseLibs']);
+
+        grunt.config('copy.devMap', {
+            files: [
+                {
+                    expand: true,
+                    flatten: true,
+                    src: [
+                        '<%= misc %>/dev/ng-map.html'
+                    ],
+                    dest: '<%= build %>/',
+                    filter: 'isFile'
+                }
+            ]
+        });
+
+        grunt.task.run(['copy:devMap']);
 
 
         function convertAngularTranslate() {

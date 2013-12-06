@@ -14,6 +14,8 @@ module.exports = function (grunt) {
             ]
         });
 
+        grunt.task.run(['copy:baseLibs']);
+
         grunt.config('copy.devMap', {
             files: [
                 {
